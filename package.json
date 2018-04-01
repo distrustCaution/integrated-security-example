@@ -1,0 +1,53 @@
+{
+  "name": "integrated-security-example",
+  "version": "1.0.0",
+  "description": "Example project to use the integrated security testing tool",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/distrustCaution/Integrated-Security-Example.git"
+  },
+  "author": "distrustCaution",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/distrustCaution/Integrated-Security-Example/issues"
+  },
+  "homepage": "https://github.com/distrustCaution/Integrated-Security-Example#readme",
+  "devDependencies": {
+    "angular": "^1.6.9",
+    "angular-cookies": "^1.6.9",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "bootstrap": "^4.0.0",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "chromedriver": "^2.21.2",
+    "cookie-parser": "^1.4.3",
+    "crypto": "^1.0.1",
+    "express": "^4.16.2",
+    "http": "0.0.0",
+    "jquery": "^3.3.1",
+    "jsonwebtoken": "^5.7.0",
+    "mocha": "^5.0.0",
+    "newman": "^3.9.3",
+    "nodemon": "^1.14.12",
+    "popper.js": "^1.14.1",
+    "proxy-agent": "^2.2.0",
+    "pug": "^2.0.0-rc.4",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "sequelize": "^4.33.4",
+    "sqlite3": "^3.1.13",
+    "strong-soap": "^1.5.0",
+    "superagent": "^3.8.2",
+    "superagent-proxy": "^1.0.3",
+    "uuid": "^3.2.1",
+    "xml": "^1.0.1",
+    "xml-flow": "^1.0.2",
+    "zaproxy": "^0.2.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"    
+  }
+}

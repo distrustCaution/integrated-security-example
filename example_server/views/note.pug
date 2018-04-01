@@ -1,0 +1,20 @@
+extends layout.pug
+block content 
+    script
+    div(ng-controller="noteController")
+        div#note
+            - var noteTitle = '<span id="notetitle" contenteditable=true>'+note.title+'</span>'
+            h2
+                span!= noteTitle
+            br
+            - var noteBody = '<span id="notebody" contenteditable=true>'+note.data+'</span>'
+            div!= noteBody
+            br
+            button#saveButton(ng-click="save()") Save
+        div#sharing
+            br
+            input#share(type="text", ng-model="sharename", placeholder="type in a user to share with")
+            button#shareButton(ng-click="share()") Share
+            span#shareresult(ng-bind="shareresult")
+
+        

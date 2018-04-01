@@ -1,0 +1,19 @@
+html
+    head
+        title= title
+        script(src="/angular/angular.js")
+        script(src="/angular-cookies/angular-cookies.min.js")
+        script(src="/public/app.js")
+    
+    body(ng-app='app')
+
+    if user != null
+        p Welcome back to the note taking app #{user.username}
+        div(ng-controller='titleController')
+            a(href='/home') All Notes
+            span  
+            button#newNote(ng-click="newNote()") New Note
+        block content 
+    else 
+        p Welcome back note to the taking app
+        block content

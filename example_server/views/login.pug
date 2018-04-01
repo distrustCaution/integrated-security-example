@@ -1,0 +1,13 @@
+extends layout.pug
+block content 
+    h2 Log In
+    #logIn
+        form(name="/login", action="/login", method="post")
+            div.input
+                span.label Username
+                input(type="text", name="username")
+            div.input
+                span.label Password
+                input(type="password", name="password")
+            div.actions
+                input(type="submit", value="login", id="login")

@@ -1,0 +1,10 @@
+extends layout.pug
+block content
+    h1#allNotesTitle All notes
+    each note in notes
+        - var noteTitle = '<em>' + note.title + '</em>'
+        li 
+            a(href='/note/'+note.id)!= noteTitle
+
+        
+
