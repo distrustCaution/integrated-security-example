@@ -53,8 +53,8 @@ describe("UI test to share an item ", function(){
     });
 
     after(function(){
-        // if(driver && driver.quit) driver = driver.quit();
-        // server.server.close();        
+        if(driver && driver.quit) driver = driver.quit();
+        server.server.close();        
     });
     
     it('should start the driver', async function(){
