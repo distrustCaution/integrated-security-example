@@ -1,6 +1,6 @@
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../example_server/example_server');
+let server = require('../../src/example_server');
 var expect = require('chai').expect;
 var should = require('chai').should();
 const http = require('http');

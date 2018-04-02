@@ -1,10 +1,10 @@
 var webdriver = require("selenium-webdriver");
 const {Builder, By, Key, until} = require('selenium-webdriver');
 var expect = require('chai').expect;
-let server = require('../example_server/example_server');
+let server = require('../../src/example_server');
 
 var requestPromise = require('request-promise');
-var xssTester = require('../../src/xss_tester');
+var xssTester = require('integrated-security').xss;
 
 var capabilities = {
     'browserName': 'chrome',

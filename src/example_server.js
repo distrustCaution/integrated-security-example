@@ -36,9 +36,9 @@ exports.start = async function(port){
     // Set some local variables 
     app.locals.siteName = "The Notepad for Sharing";
 
-    app.use('/public', express.static(path.join(__dirname, 'public')));
-    app.use('/angular', express.static(path.join(__dirname, '../../node_modules/angular')));
-    app.use('/angular-cookies', express.static(path.join(__dirname, '../../node_modules/angular-cookies')));
+    app.use('public', express.static(path.join(__dirname, './public')));
+    app.use('angular', express.static(path.join(__dirname, '../node_modules/angular')));
+    app.use('angular-cookies', express.static(path.join(__dirname, '../node_modules/angular-cookies')));
 
     exports.server = app.listen(port);
 

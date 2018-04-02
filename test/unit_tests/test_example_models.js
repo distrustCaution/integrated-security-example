@@ -1,6 +1,6 @@
 var mocha = require('mocha');
 var expect = require('chai').expect;
-var models = require('../example_models');
+var models = require('../../src/example_models');
 
 describe('Example models', function(){
     before(async function(){

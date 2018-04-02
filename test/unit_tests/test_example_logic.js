@@ -1,7 +1,7 @@
 var mocha = require('mocha');
 var expect = require('chai').expect;
-var models = require('../example_models');
-var logic = require('../example_logic');
+var models = require('../../src/example_models');
+var logic = require('../../src/example_logic');
 var sequelize = require('sequelize');
 
 
