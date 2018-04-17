@@ -125,3 +125,9 @@ Use ls -lu
 #### With db access
 
 #### Without db access
+
+### Find CSV Injection
+
+### Find Open Redirects
+
+### Find File System Writes (Must have fileystem access)
