@@ -51,12 +51,14 @@ As one of the greatest mathemeticians ever once said:
 * This will find more subtle bugs than application scanners
 * This will have much less false positives (Almost no false positives)
 * This can automate security testing with business logic
+* The bugs you find
 * This can find a lot of 'low hanging fruit' security issues
 
 ### Limitations of integrated security testing
 
 * This will not find the super hard core ninja class bugs
 * This will not compensate for bad design choices
+* It is a tool to aid security testing, but it doesn't replace manual penetration testing
 * This will not find all the bugs, but it will be a reliable way to find security issues
 
 *Overall, this is a good choice as a dynamic analysis tool, and is more reliable than web application scanners, but it isn't a magic pill that will cure everything.*
@@ -113,6 +115,8 @@ Most of the times a test suite will have a function that will automate account c
 ### Find XXE
 
 #### With filesystem access
+
+Use ls -lu
 
 #### Without filesystem access
 
