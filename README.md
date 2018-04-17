@@ -35,31 +35,72 @@ By leverage, I other people's existing integration tests.
 The whole plan of this is to leverage existing integration tests to find real world security bugs inside a web application.
 Get ready, and I'll show you the way of integrated security testing. 
 
-"Give me a lever long enough and a fulcrum on which to place it, and I shall *hack the planet*"
+As one of the greatest mathemeticians ever once said:
+
+> "Give me a lever long enough and a fulcrum on which to place it, and I shall *hack the planet*"
 
 - Archimedes
 
+### Benefits of integrated security testing
+
+* Can be done with any software framework/language
+* Highly efficient at finding bugs
+* You have something to hand to testers to run as part of their CI/CD pipeline
+* You have an automated repro to help developers fix and understand the security issue
+* You can use this to train testers to become security testers
+* This will find more subtle bugs than application scanners
+* This will have much less false positives (Almost no false positives)
+* This can automate security testing with business logic
+* This can find a lot of 'low hanging fruit' security issues
+
+### Limitations of integrated security testing
+
+* This will not find the super hard core ninja class bugs
+* This will not compensate for bad design choices
+* This will not find all the bugs, but it will be a reliable way to find security issues
+
+*Overall, this is a good choice as a dynamic analysis tool, and is more reliable than web application scanners, but it isn't a magic pill that will cure everything.*
+
 ## Understand the Test Framework
+
+Before you can start using integration test for white hat hacking, you must first understand how testing works. 
+All testers will have a few key tools set up with some test wrappers and assertions set up, first you should understand them... so you can manipulate them. Muwahahah.
+Notice this won't be a full guide on how to do integration testing, we don't actually care about that. You just need to get a 'hacker's knowledge' on how to use it. 
+
+Also, this example is using NodeJS, but you can do it on any language and any framework. I started doing this methodology with Ruby and .Net projects originally, and only did this example in NodeJS since I wanted to understand how NodeJS worked.
+
+Lastly, if you think my code is dirty and bad in this example: good! This is to help you learn how to read hastily written and badly maintained test code!
 
 ### Selenium and other elements
 
 This example uses the selenium web driver to test the web ui. All you really need to know is that selenium will interact with a web application via the browser just like a user.
 
-To see simple example, go to: 
+To see a simple example, go to: 
 
+For any suite of tests using selenium, you will most likely see a function similar to this:
 
+All testers will have that in order to save time. Knowing how to boot up selenium is key for this method.
+
+### API testing
+This example also uses request-promise to test out the API given to you. See here for how that works:
 
 ### Tests
+This test framework uses a test library called Mocha, see here for a simple example:
 
-#### Setup and tear down
+And you can run ``` example ``` to see it in action.
 
-#### Assertions
+Basically, you can see everything in the 'before' part as before all the tests run. This is often called the 'setup.'
+Likewise, in the 'after' function, you have the equivalent 'tear down' step. This is often used to clean things up.
+
+You can see the 'Expect...' area, those are called assertions. This is actually how we verify that what we are testing for. It's not enough to type in '2+2', you need to make sure that it actually equals '4'
 
 ### Making an account
 
-### Set up the proxy
+Most of the times a test suite will have a function that will automate account creation for you. You should always find something like this:
 
-## Make it work for you to find security bugs
+## Be lazy and let ZAP/Burp do the work for you!
+
+## Make test work for you to find security bugs
 
 ### Find XSS
 
@@ -71,9 +112,12 @@ To see simple example, go to:
 
 ### Find XXE
 
+#### With filesystem access
+
+#### Without filesystem access
+
 ### Find SQLi
 
-## Passive Scan & Best Practices
+#### With db access
 
-## Using man in the middle proxy
-
+#### Without db access
