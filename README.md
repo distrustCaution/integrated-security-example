@@ -23,7 +23,20 @@ Requirements:
 ```npm run integrationTest```
 If your install is successful, you should see it run through the integration tests and a chrome driver window should pop up. 
 
-# Workshop
+*You may see the following error when running the integration test on linux:*
+```
+> mocha --reporter spec "test/integration_tests/*.js"
+
+module.js:545
+    throw err;
+    ^
+
+Error: Cannot find module '/integrated-security-example/node_modules/sqlite3/lib/binding/node-v59-linux-x64/node_sqlite3.node'
+```
+
+In this case, I recommend installing NVM and setting your node version to exactly v8.11.1. The sqlite driver does not work properly on newer node versions.
+
+# Workshop -- Still in progress!
 
 This repository can be used to learn how to do integrated security testing
 

@@ -2,43 +2,17 @@ var webdriver = require("selenium-webdriver");
 const {Builder, By, Key, until} = require('selenium-webdriver');
 var expect = require('chai').expect;
 let server = require('../../src/example_server');
+let helpers = require('./helper_methods');
 
-var requestPromise = require('request-promise');
-
-
-var capabilities = {
-    'browserName': 'chrome',
-    'proxy': {
-        'proxyType': 'manual',
-        'httpProxy': 'localhost:8080',
-        'httpsProxy': 'localhost:8080',
-        'sslProxy': 'localhost:8080'
-      }
-}
-
-const port = 8000;
-const standardTimeout = 2000;
-const testTimeout = standardTimeout * 20;
-const baseUri = "http://localhost:"+port
-var proxyUri = "http://localhost:8080"
-
-var sleep = function(ms) {
-    if(!ms) ms = standardTimeout;
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-//with proxy 
-// var r = requestPromise.defaults({'proxy':proxyUri});
-//without proxy 
-var r = requestPromise;
-
-async function createDriver() {
-   var driver = new webdriver.Builder()
-       .withCapabilities(webdriver.Capabilities.chrome()) //without proxy
-    //    .withCapabilities(capabilities) // with proxy
-       .build();
-   return driver;
-}      
+// var capabilities = {
+//     'browserName': 'chrome',
+//     'proxy': {
+//         'proxyType': 'manual',
+//         'httpProxy': 'localhost:8080',
+//         'httpsProxy': 'localhost:8080',
+//         'sslProxy': 'localhost:8080'
+//       }
+// }
 
 describe("UI test to share an item ", function(){
     var driver;
@@ -49,7 +23,7 @@ describe("UI test to share an item ", function(){
     var note = {"title":"my note title!!", "data":"my note itself. "};
 
     before(async function(){
-        await server.start(port);
+        await helpers.startServer();
     });
 
     after(function(){
@@ -57,80 +31,68 @@ describe("UI test to share an item ", function(){
         server.server.close();        
     });
     
-    it('should start the driver', async function(){
-        driver = await createDriver();  
-    }).timeout(testTimeout);
+    helpers.longTest('should start the driver', async function(){
+        driver = await helpers.startDriver(); 
+    });
 
-    it('should let make users via the api', async function(){
-        var fooResult = await r({
-            method: 'POST',
-            uri:baseUri+"/api/account/",
-            body: fooUser,
-            json: true
-        })
-        expect(fooResult.message).to.not.be.null;
-        var barResult = await r({
-            method: 'POST',
-            uri:baseUri+"/api/account/",
-            body: barUser,
-            json: true
-        })
-        expect(barResult.message).to.not.be.null;
-    }).timeout(testTimeout);
+    helpers.longTest('should let you make users via the api', async function(){
+        var fooResult = await helpers.createAccount(fooUser)
+        var barResult = await helpers.createAccount(barUser)
+    })
 
-    it('should let you log in', async function(){
+    helpers.longTest('should let you log in', async function(){
 
-        driver.get("localhost:"+port+"/login"); 
-        await sleep();
+        helpers.goToLogin();
+        await helpers.sleep();
         var result = await driver.wait(webdriver.until.elementLocated(webdriver.By.name('username')));
-        await sleep();
+        await helpers.sleep();
         var username = await driver.findElement(webdriver.By.name("username"));
         username.sendKeys(fooUser.username);
-        await sleep();
+        await helpers.sleep();
         var password = await driver.findElement(webdriver.By.name("password"));
         password.sendKeys(fooUser.password);
-        await sleep();
+        await helpers.sleep();
         var submit = await driver.findElement(By.id("login"));
         submit.click();
-        await sleep();
+        await helpers.sleep();
         await driver.wait(webdriver.until.elementLocated(webdriver.By.id('allNotesTitle')));
-        await sleep(); 
+        await helpers.sleep(); 
 
-    }).timeout(testTimeout);
+    });
 
-    it('should let you make a note', async function(){
+    helpers.longTest('should let you make a note', async function(){
         
         var newNote = await driver.findElement(By.id("newNote"));
         newNote.click();
 
-        await sleep();
+        await helpers.sleep();
 
         await driver.wait(webdriver.until.elementLocated(webdriver.By.id('notetitle')));
 
-        await sleep();
+        await helpers.sleep();
 
-    }).timeout(testTimeout);
+    });
 
-    it('should let you change the note', async function(){
+    helpers.longTest('should let you change the note', async function(){
         
         var notetitle = await driver.findElement(webdriver.By.id("notetitle"));
         await notetitle.sendKeys(Key.CONTROL,"a");
         await notetitle.sendKeys(Key.DELETE);
         await notetitle.sendKeys(note.title);
         
-        await sleep();
+        await helpers.sleep();
 
         var notebody = await driver.findElement(webdriver.By.id("notebody"));
         await notebody.sendKeys(Key.CONTROL,"a");
         await notebody.sendKeys(Key.DELETE);
         await notebody.sendKeys(note.data);
 
-        await sleep();        
+        await helpers.sleep();        
 
         var saveButton = await driver.findElement(By.id("saveButton"));
         saveButton.click();
 
-        await sleep();
+        await helpers.sleep();
 
         notebody = await driver.findElement(webdriver.By.id("notebody")).getText().then((text) => {
           return text
@@ -144,61 +106,61 @@ describe("UI test to share an item ", function(){
   
         expect(notetitle).to.equal(note.title);
         
-    }).timeout(testTimeout);
+    });
 
-    it('should let you share a note with someone', async function(){
+    helpers.longTest('should let you share a note with someone', async function(){
         var share = await driver.findElement(By.id("share"));
         await share.sendKeys(barUser.username);
         var shareButton = await driver.findElement(By.id("shareButton"));
         var a = await shareButton.click();
-        await sleep();
+        await helpers.sleep();
         await driver.executeScript("document.getElementById(\"shareButton\").click()");
-        await sleep();
+        await helpers.sleep();
         var shareResult = await driver.findElement(webdriver.By.id("shareresult")).getText().then((text) => {
             return text
         });
-        await sleep();
+        await helpers.sleep();
         expect(shareResult).to.include('Successfully');
-        await sleep();
+        await helpers.sleep();
         
-    }).timeout(testTimeout);
+    });
 
-    it('should have the shared note on the other user\'s page', async function(){
+    helpers.longTest('should have the shared note on the other user\'s page', async function(){
 
-        driver.get("localhost:"+port+"/login"); 
-        await sleep();
+        helpers.goToLogin();
+        await helpers.sleep();
         var result = await driver.wait(webdriver.until.elementLocated(webdriver.By.name('username')));
-        await sleep();
+        await helpers.sleep();
         var username = await driver.findElement(webdriver.By.name("username"));
         username.sendKeys(barUser.username);
-        await sleep();
+        await helpers.sleep();
         var password = await driver.findElement(webdriver.By.name("password"));
         password.sendKeys(barUser.password);
-        await sleep();
+        await helpers.sleep();
         var submit = await driver.findElement(By.id("login"));
         submit.click();
-        await sleep();
-    }).timeout(testTimeout);
+        await helpers.sleep();
+    });
     
-    it('should be accessible to the other user', async function(){ 
+    helpers.longTest('should be accessible to the other user', async function(){ 
 
         var item = await driver.executeScript("return Array.from(document.querySelectorAll('a')).find(el => el.textContent === '"+note.title+"');")
-        await sleep();
+        await helpers.sleep();
         await item.click();
-        await sleep();
+        await helpers.sleep();
 
         var notebody = await driver.findElement(webdriver.By.id("notebody")).getText().then((text) => {
             return text
         });
         expect(notebody).to.equal(note.data);
-        await sleep();
+        await helpers.sleep();
 
         var notetitle = await driver.findElement(webdriver.By.id("notetitle")).getText().then((text) => {
             return text
         });
         expect(notetitle).to.equal(note.title);
-        await sleep();
+        await helpers.sleep();
 
-    }).timeout(testTimeout);
+    });
 
 });
