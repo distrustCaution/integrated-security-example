@@ -1,3 +1,5 @@
+// This example is not ready yet
+
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../src/example_server');
