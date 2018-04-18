@@ -26,7 +26,7 @@ var helperMethods = function(){
         if(this.driver && this.driver.quit) this.driver = this.driver.quit();
     }
 
-    this.createAccount =  async function(accountData, baseUri){
+    this.createAccount = async function(accountData, baseUri){
         if(!baseUri) baseUri = this.baseUri
         var result = await this.request({
             method :  'POST',
@@ -38,17 +38,35 @@ var helperMethods = function(){
         return result;
     }
 
+    this.getLoginToken = async function(user){
+        token = await this.request({
+            method: 'POST',
+            uri:this.baseUri+"/api/login",
+            body: user,
+            json: true
+        })
+        .then((res) => {
+            console.log(res);
+            return res.Token;
+        })
+        .catch((err) => {
+            return err;
+        });
+        return token;
+    }
+
     this.sleep = function(ms) {
         if(!ms) ms = this.standardTimeout;
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    this.startServer = async function(){
-        this.server = await example.start(this.port).server;
-        this.baseUri = "http://localhost:"+this.port
+    this.startServer = async function(port){
+        if(port) this.port = port;
+        this.server = await example.start(this.port);
+        this.baseUri = "http://localhost:"+this.port;
     }
     this.stopServer = function() {
-        if(this.server) this.server.close();
+        if(this.server) this.server.server.close();
         this.server = null;
         this.baseUri = null;
     }
