@@ -3,16 +3,11 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
 var expect = require('chai').expect;
 let server = require('../../src/example_server');
 let helpers = require('./helper_methods');
+var requestPromise = require('request-promise');
 
-// var capabilities = {
-//     'browserName': 'chrome',
-//     'proxy': {
-//         'proxyType': 'manual',
-//         'httpProxy': 'localhost:8080',
-//         'httpsProxy': 'localhost:8080',
-//         'sslProxy': 'localhost:8080'
-//       }
-// }
+//with proxy 
+// var proxyUri = "http://localhost:8080"
+// helpers.request = requestPromise.defaults({'proxy':proxyUri});
 
 describe("UI test to share an item ", function(){
     var driver;
@@ -32,7 +27,19 @@ describe("UI test to share an item ", function(){
     });
     
     helpers.longTest('should start the driver', async function(){
+        //Without proxy
         driver = await helpers.startDriver(); 
+        //With proxy
+        // var capabilities = {
+        //     'browserName': 'chrome',
+        //     'proxy': {
+        //         'proxyType': 'manual',
+        //         'httpProxy': 'localhost:8080',
+        //         'httpsProxy': 'localhost:8080',
+        //         'sslProxy': 'localhost:8080'
+        //       }
+        // }
+        // driver = await helpers.startDriver(capabilities); 
     });
 
     helpers.longTest('should let you make users via the api', async function(){

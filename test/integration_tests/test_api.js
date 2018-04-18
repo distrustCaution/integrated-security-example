@@ -1,31 +1,18 @@
 let chai = require('chai');
-let chaiHttp = require('chai-http');
 let server = require('../../src/example_server');
 var expect = require('chai').expect;
-var should = require('chai').should();
 const http = require('http');
-var request = require('request');
 var requestPromise = require('request-promise');
+var helpers = require("./helper_methods")
 
-
-chai.use(chaiHttp);
-// require('superagent-proxy')(chai.request.Test);
-
-const port = 8000;
-const baseUri = "http://localhost:"+port
-
-var proxyUri = "http://localhost:8080"
-
-// var r = request.defaults({'proxy':proxyUri});
 
 //with proxy 
-// var r = requestPromise.defaults({'proxy':proxyUri});
-//without proxy 
-var r = requestPromise;
+// var proxyUri = "http://localhost:8080"
+// helpers.request = requestPromise.defaults({'proxy':proxyUri});
 
 describe("API", function(){
     before(async function(){
-        await server.start(port);
+        await helpers.startServer();
     });
     
     describe("User", function(){
@@ -35,9 +22,9 @@ describe("API", function(){
         };
         var token;
         it("should be able to make a user", async function(){
-            var result = await r({
+            var result = await helpers.request({
                 method: 'POST',
-                uri:baseUri+"/api/account/",
+                uri:helpers.baseUri+"/api/account/",
                 body: user,
                 json: true
             })
@@ -45,9 +32,9 @@ describe("API", function(){
         });
 
         it("should be able to login the user", async function(){
-            token = await r({
+            token = await helpers.request({
                 method: 'POST',
-                uri:baseUri+"/api/login",
+                uri:helpers.baseUri+"/api/login",
                 body: user,
                 json: true
             })
@@ -63,9 +50,9 @@ describe("API", function(){
         });
 
         it("should be NOT able to read the user without a good login token", async function(){
-            await r({
+            await helpers.request({
                 method: 'GET',
-                uri:baseUri+"/api/account/"+user.username,
+                uri:helpers.baseUri+"/api/account/"+user.username,
                 headers:{
                     'Token':'foobar'
                 },
@@ -81,9 +68,9 @@ describe("API", function(){
 
         it("should be able to read the user with login token", async function(){
             expect(token).to.be.a('string'); //Verify we have a token
-            await r({
+            await helpers.request({
                 method: 'GET',
-                uri:baseUri+"/api/account/"+user.username,
+                uri:helpers.baseUri+"/api/account/"+user.username,
                 headers:{
                     'Token': token
                 },
@@ -110,27 +97,14 @@ describe("API", function(){
             data: "bar baz"
         }
         before(async function(){
-            await r({
-                method: 'POST',
-                uri:baseUri+"/api/account",
-                body: user1,
-                json: true
-            });
-            user1.token = await r({
-                method: 'POST',
-                uri:baseUri+"/api/login",
-                body: user1,
-                json: true
-            })
-            .then((res) => {
-                return res.Token;
-            });
+            await helpers.createAccount(user1);
+            user1.token = await helpers.getLoginToken(user1);
         });
 
         it('should be able to make a note', async function(){
-            note.id = await r({
+            note.id = await helpers.request({
                 method: 'POST',
-                uri: baseUri+"/api/note",
+                uri: helpers.baseUri+"/api/note",
                 headers : {
                     Token: user1.token
                 },
@@ -149,9 +123,9 @@ describe("API", function(){
 
         it('should have the note in all notes', async function(){
             expect(note.id).to.be.a('number');
-            var result = await r({
+            var result = await helpers.request({
                 method: 'GET',
-                uri: baseUri+"/api/note",
+                uri: helpers.baseUri+"/api/note",
                 headers : {
                     Token: user1.token
                 },
@@ -166,9 +140,9 @@ describe("API", function(){
 
         it('should be able to get a note', async function(){
             expect(note.id).to.be.a('number');
-            var result = await r({
+            var result = await helpers.request({
                 method: 'GET',
-                uri: baseUri+"/api/note/"+note.id,
+                uri: helpers.baseUri+"/api/note/"+note.id,
                 headers : {
                     Token: user1.token
                 },
@@ -185,9 +159,9 @@ describe("API", function(){
                 title : "woooohooo!",
                 data : "LOREM IPSUM FTW!"
             }
-            var update = await r({
+            var update = await helpers.request({
                 method: 'PUT',
-                uri: baseUri+"/api/note/"+note.id,
+                uri: helpers.baseUri+"/api/note/"+note.id,
                 headers : {
                     Token: user1.token
                 },
@@ -200,9 +174,9 @@ describe("API", function(){
                 expect(err).to.be.null;
             });
 
-            var result = await r({
+            var result = await helpers.request({
                 method: 'GET',
-                uri: baseUri+"/api/note/"+note.id,
+                uri: helpers.baseUri+"/api/note/"+note.id,
                 headers : {
                     Token: user1.token
                 },
@@ -239,45 +213,18 @@ describe("API", function(){
 
         before(async function(){
             //make two users
-            await r({
-                method: 'POST',
-                uri:baseUri+"/api/account",
-                body: alice,
-                json: true
-            })
-            alice.token = await r({
-                method: 'POST',
-                uri:baseUri+"/api/login",
-                body: alice,
-                json: true
-            })
-            .then((res) => {
-                return res.Token;
-            });
+            await helpers.createAccount(alice);
+            alice.token = await helpers.getLoginToken(alice);
 
-            await r({
-                method: 'POST',
-                uri:baseUri+"/api/account",
-                body: bob,
-                json: true
-            })
-
-            bob.token = await r({
-                method: 'POST',
-                uri:baseUri+"/api/login",
-                body: bob,
-                json: true
-            })
-            .then((res) => {
-                return res.Token;
-            });
+            await helpers.createAccount(bob);
+            bob.token = await helpers.getLoginToken(bob);
         });
         
         beforeEach(async function(){
             //user one makes a note
-            note.id = await r({
+            note.id = await helpers.request({
                 method: 'POST',
-                uri: baseUri+"/api/note",
+                uri: helpers.baseUri+"/api/note",
                 headers : {
                     Token: alice.token
                 },
@@ -296,9 +243,9 @@ describe("API", function(){
 
         it("should NOT be able to read other's notes", async function(){
             expect(note.id).to.be.a('number');
-            var result = await r({
+            var result = await helpers.request({
                 method: 'GET',
-                uri: baseUri+"/api/note/"+note.id,
+                uri: helpers.baseUri+"/api/note/"+note.id,
                 headers : {
                     Token: bob.token
                 },
@@ -315,9 +262,9 @@ describe("API", function(){
         it("should be able to read other's notes after they share it", async function(){
             expect(note.id).to.be.a('number');
 
-            bob.id = await r({
+            bob.id = await helpers.request({
                 method: 'GET',
-                uri:baseUri+"/api/account/"+bob.username,
+                uri:helpers.baseUri+"/api/account/"+bob.username,
                 headers:{
                     'Token': alice.token
                 },
@@ -334,9 +281,9 @@ describe("API", function(){
 
             expect(bob.id).to.be.a('number');
 
-            var share = await r({
+            var share = await helpers.request({
                 method: 'PUT',
-                uri: baseUri+"/api/note/"+note.id+"/share",
+                uri: helpers.baseUri+"/api/note/"+note.id+"/share",
                 headers : {
                     Token: alice.token
                 },
@@ -350,9 +297,9 @@ describe("API", function(){
                 expect(err).to.be.null;
             })
 
-            var result = await r({
+            var result = await helpers.request({
                 method: 'GET',
-                uri: baseUri+"/api/note/"+note.id,
+                uri: helpers.baseUri+"/api/note/"+note.id,
                 headers : {
                     Token: bob.token
                 },
@@ -371,6 +318,6 @@ describe("API", function(){
     });
 
     after(function(){
-        server.server.close();
+        helpers.stopServer()
     });
 });

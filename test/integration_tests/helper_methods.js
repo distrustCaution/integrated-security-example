@@ -46,7 +46,6 @@ var helperMethods = function(){
             json: true
         })
         .then((res) => {
-            console.log(res);
             return res.Token;
         })
         .catch((err) => {
@@ -62,11 +61,11 @@ var helperMethods = function(){
 
     this.startServer = async function(port){
         if(port) this.port = port;
-        this.server = await example.start(this.port);
+        await example.start(this.port);
         this.baseUri = "http://localhost:"+this.port;
     }
     this.stopServer = function() {
-        if(this.server) this.server.server.close();
+        example.server.close();
         this.server = null;
         this.baseUri = null;
     }
