@@ -5,11 +5,6 @@ const http = require('http');
 var requestPromise = require('request-promise');
 var helpers = require("./helper_methods")
 
-
-//with proxy 
-// var proxyUri = "http://localhost:8080"
-// helpers.request = requestPromise.defaults({'proxy':proxyUri});
-
 describe("API", function(){
     before(async function(){
         await helpers.startServer();

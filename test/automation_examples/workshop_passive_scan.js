@@ -2,9 +2,6 @@ var test_ui = require("./test_ui_wrapper");
 var requestPromise = require('request-promise');
 const { exec } = require('child_process');
 
-const { spawn } = require('child_process');
-// const child = spawn('ls', ['-lh', '/usr']);
-
 var port = 3000;
 var proxyPort = 8083;
 var proxyUrl = 'localhost:'+proxyPort
@@ -26,10 +23,10 @@ test_ui(
     {
         //start zap with proxy
         // Change this to: 
-        // exec('java -jar <<zap location>>/zap-2.7.0.jar -port '+proxyPort)
-        // zap = spawn('java -jar ./zapLocation/ZAP_2.7.0/zap-2.7.0.jar -port '+proxyPort)
+        // zap = exec('java -jar <<zap location>>/zap-2.7.0.jar -port '+proxyPort)
         zap = exec('java -jar ./zapLocation/ZAP_2.7.0/zap-2.7.0.jar -port '+proxyPort)
-        helpers.sleep(60*1000);
+        console.log(zap);
+        await helpers.sleep(60*1000);
     },
     async function(helpers)
     {
@@ -43,8 +40,10 @@ test_ui(
         )
         //write the results somewhere
         console.log(results);
-        // stop zap (manually for now)
+        // stop zap
+        zap.kill();
     },
     capabilities, // add proxy    
-    proxyUrl
+    proxyUrl,
+    120*1000
 )

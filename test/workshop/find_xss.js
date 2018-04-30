@@ -1,3 +1,9 @@
+/*
+    TUTORIAL PART 1: 
+    Any comment that starts with "TUTORIAL" contains instructions
+    Your mission: Find XSS using the existing integration tests
+*/
+
 var webdriver = require("selenium-webdriver");
 const {Builder, By, Key, until} = require('selenium-webdriver');
 var expect = require('chai').expect;
@@ -5,9 +11,44 @@ let server = require('../../src/example_server');
 let helpers = require('./helper_methods');
 var requestPromise = require('request-promise');
 
+
+/*
+    TUTORIAL PART 2:
+    We need away to store and find our payloads.
+    The easiest thing we can do is have an array of payloads
+*/
+var payloads = [];
+
+/* 
+    TUTORIAL PART 3:
+    Create a function that called 'createXSS' that generates an XSS payload such as:
+    <script>console.error(1234)</script>
+    It should take in one variable such that:
+    createXSS("foo") => <script>console.error("foo")</script>
+    It should also store it into the payloads structure
+
+    Note, we don't want to use 'alert' since that will stop test execution if it is unexpected
+*/
+ 
+var createXSS = function(string)
+{
+    var payload = '';// create your payload here
+    payloads.push(payload); // let's save the payload
+    return payload;
+}
+
+/*
+    TUTORIAL PART 4:
+    We need to create a function that will verify if our payload executed. 
+    To check for this, we need to look in the log area in chrome.
+    Create a function called 'checkPayloads' that verifies this.
+*/
+
+var checkPayloads
+
+
 describe("UI test to share an item ", function(){
     var driver;
-
     var fooUser = {"username":"Foo","password":"foo"};
     var barUser = {"username":"Bar","password":"bar"};
 
@@ -23,6 +64,7 @@ describe("UI test to share an item ", function(){
     });
     
     helpers.longTest('should start the driver', async function(){
+        //Without proxy
         driver = await helpers.startDriver(); 
     });
 

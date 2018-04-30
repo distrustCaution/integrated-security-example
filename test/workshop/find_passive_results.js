@@ -1,7 +1,7 @@
 /*
-    TUTORIAL 1: 
+    TUTORIAL PART 1: 
     Any comment that starts with "TUTORIAL" contains instructions
-    Your mission: Find XSS using the existing integration tests
+    Your mission: Use ZAP passive on an existing integration test
 */
 
 var webdriver = require("selenium-webdriver");
@@ -11,30 +11,26 @@ let server = require('../../src/example_server');
 let helpers = require('./helper_methods');
 var requestPromise = require('request-promise');
 
-//with proxy 
-// var proxyUri = "http://localhost:8080"
-// helpers.request = requestPromise.defaults({'proxy':proxyUri});
-
-/* 
-    TUTORIAL 2:
-    Create a function that generates an XSS payload such as:
-    <script>console.error(1234)</script>
-    It should take in one variable such that:
-    createXSS("foo") => <script>console.error("foo")</script>
-
-    Note, we don't want to use 'alert' since that will stop test execution if it is unexpected
-*/
 
 /*
-    TUTORIAL 3:
-    We need away to find our payload.
-    The easiest thing we can do is have an array of payloads
+    TUTORIAL PART 2: 
+    Start up zap, and then get the url for the proxy
 */
-var payloads = [];
- 
+var proxyUri = ""
+
+/*
+    TUTORIAL PART 3: 
+    This test uses two tools that we can proxy: an http client and a selenium web driver.
+    In most cases, you want to research how the tester sets up the client, and then choose your own proxy.
+    In this case, I'll do it for you, you just need to add the proxy uri
+*/
+helpers.request = requestPromise.defaults(
+    {'proxy':""}
+);
 
 describe("UI test to share an item ", function(){
     var driver;
+
     var fooUser = {"username":"Foo","password":"foo"};
     var barUser = {"username":"Bar","password":"bar"};
 
@@ -50,19 +46,26 @@ describe("UI test to share an item ", function(){
     });
     
     helpers.longTest('should start the driver', async function(){
-        //Without proxy
-        driver = await helpers.startDriver(); 
+        /*
+            TUTORIAL PART 4: 
+            We need to use selenium as well. 
+            This should be a quick google search away on how to set up the proxy/capabilities.
+            After finding out how to do that, please return here and set up the proxy.
+        */
         //With proxy
-        // var capabilities = {
-        //     'browserName': 'chrome',
-        //     'proxy': {
-        //         'proxyType': 'manual',
-        //         'httpProxy': 'localhost:8080',
-        //         'httpsProxy': 'localhost:8080',
-        //         'sslProxy': 'localhost:8080'
-        //       }
-        // }
-        // driver = await helpers.startDriver(capabilities); 
+        var capabilities = {
+            'browserName': 'chrome',
+            'proxy': {
+                //Fill in here
+            }
+        }
+        driver = await helpers.startDriver(capabilities); 
+        /*
+            TUTORIAL PART 5: 
+            After the proxy is set up properly, try running the test.
+            You should see all the requests in ZAP history.
+            Then, go to Results -> Generate HTML report to get passive scan results.
+        */
     });
 
     helpers.longTest('should let you make users via the api', async function(){

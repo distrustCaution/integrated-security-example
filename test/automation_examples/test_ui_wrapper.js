@@ -8,8 +8,9 @@ var requestPromise = require('request-promise');
 //with proxy 
 // var proxyUri = "http://localhost:8080"
 // helpers.request = requestPromise.defaults({'proxy':proxyUri});
-var runTest = function(myPort, myCapabilities, myBefore, myAfter, myProxyUrl){
+var runTest = function(myPort, myCapabilities, myBefore, myAfter, myProxyUrl, myTimeout){
     describe("UI test to share an item ", function(){
+        if(myTimeout) this.timeout(myTimeout);
         var driver;
     
         var fooUser = {"username":"Foo","password":"foo"};
