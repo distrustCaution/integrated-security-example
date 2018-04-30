@@ -33,23 +33,43 @@ var payloads = [];
 var createXSS = function(string)
 {
     var payload = '';// create your payload here
-    payloads.push(payload); // let's save the payload
+    var evaluatedPayload = ''; //deterimine what the evaluated payload should be
+    payloads.push(evaluatedPayload); // let's save the evaluated payload
     return payload;
 }
 
-/*
-    TUTORIAL PART 4:
-    We need to create a function that will verify if our payload executed. 
-    To check for this, we need to look in the log area in chrome.
-    Create a function called 'checkPayloads' that verifies this.
-*/
-
-var checkPayloads
-
 
 describe("UI test to share an item ", function(){
-    var driver;
-    var fooUser = {"username":"Foo","password":"foo"};
+
+
+    var driver; // essentially make the driver 'global'
+    
+    /*
+        TUTORIAL PART 4:
+        We need to create a function that will verify if our payload executed. 
+        To check for this, we need to look in the log area in chrome.
+        Create a function called 'checkPayloads' that verifies this.
+        Hint: to get the logs, use
+        await driver.manage().logs().get(webdriver.logging.Type.BROWSER);
+        NOTE: selenium will delete the logs as you get them
+    */
+
+    var checkPayloads = async function(){
+        var logs = await '';// get the logs
+        if(logs.length > 0){
+            // iterate through the logs and assert if they are found in the payloads array
+        }
+    }
+
+    helpers.onSleep = checkPayloads; // make this function happen on sleep
+
+    /*
+        TUTORIAL PART 5: 
+        We need to use our function 'createXSS' to add payloads around our tests.
+        Go through the tests, and add our payload generator, I'll do one for you :)
+    */
+
+    var fooUser = {"username":createXSS("Foo"),"password":"foo"};
     var barUser = {"username":"Bar","password":"bar"};
 
     var note = {"title":"my note title!!", "data":"my note itself. "};
@@ -61,6 +81,17 @@ describe("UI test to share an item ", function(){
     after(function(){
         if(driver && driver.quit) driver = driver.quit();
         server.server.close();        
+    });
+
+
+    afterEach(async function(){
+        /*
+            TUTORIAL PART 6: 
+            We need to check for the payloads using our 'checkPayloads' function
+            I'll put it at the end of every test here, and one other place
+            but you should check in lots of areas before running the tests
+        */
+       await checkPayloads(driver);
     });
     
     helpers.longTest('should start the driver', async function(){
@@ -90,6 +121,7 @@ describe("UI test to share an item ", function(){
         await helpers.sleep();
         await driver.wait(webdriver.until.elementLocated(webdriver.By.id('allNotesTitle')));
         await helpers.sleep(); 
+        
 
     });
 
@@ -97,7 +129,8 @@ describe("UI test to share an item ", function(){
         
         var newNote = await driver.findElement(By.id("newNote"));
         newNote.click();
-
+        await checkPayloads(driver); // Checks for XSS
+        
         await helpers.sleep();
 
         await driver.wait(webdriver.until.elementLocated(webdriver.By.id('notetitle')));

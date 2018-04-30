@@ -10,8 +10,6 @@
     "unitTest": "mocha --reporter spec \"test/unit_tests/**/*.js\"",
     "exampleTest": "mocha --reporter spec \"test/example_server/test/*.js\"",
     "integrationTest": "mocha --reporter spec \"test/integration_tests/*.js\"",
-    "workshopAnswers": "mocha --reporter spec \"test/workshop_answers/workshop*.js\"",
-    "workshopPassive": "mocha --reporter spec \"test/workshop_answers/workshop_passive_scan.js\"",
     "uiTest": "mocha --reporter spec \"test/integration_tests/test_ui.js\"",
     "apiTest": "mocha --reporter spec \"test/integration_tests/test_api.js\"",
     "demoAuthz": "mocha --reporter spec \"test/demo_tests/*authz.js\"",
@@ -19,6 +17,7 @@
     "demoAngularInjection": "mocha --reporter spec \"test/demo_tests/*angular_injection.js\"",
     "demoExternalScript": "mocha --reporter spec \"test/demo_tests/*external_scripts.js\"",
     "demoSqli": "mocha --reporter spec \"test/demo_tests/*sqli.js\""
+    
   },
   "repository": {
     "type": "git",

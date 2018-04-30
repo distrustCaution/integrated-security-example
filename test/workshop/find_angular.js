@@ -1,7 +1,7 @@
 /*
     TUTORIAL 1: 
     Any comment that starts with "TUTORIAL" contains instructions
-    Your mission: Find XSS using the existing integration tests
+    Your mission: Find Angular Injection using the existing integration tests
 */
 
 var webdriver = require("selenium-webdriver");
@@ -11,35 +11,68 @@ let server = require('../../src/example_server');
 let helpers = require('./helper_methods');
 var requestPromise = require('request-promise');
 
-//with proxy 
-// var proxyUri = "http://localhost:8080"
-// helpers.request = requestPromise.defaults({'proxy':proxyUri});
+/*
+    TUTORIAL 2:
+    We need away to store our payloads.
+    The easiest thing we can do is have an array of payloads
+*/
+var payloads = [];
 
 /* 
-    TUTORIAL 2:
-    Create a function that generates an XSS payload such as:
-    <script>console.error(1234)</script>
+    TUTORIAL 3:
+    Create a function that generates an Angular injection such as:
+    {{2*2}}
+    It should generate two random numbers of at least 4 digits
     It should take in one variable such that:
-    createXSS("foo") => <script>console.error("foo")</script>
+    angularInjection("foo") => "foo{{2*2}}"
+    And it should push the result (4) to the array
 
     Note, we don't want to use 'alert' since that will stop test execution if it is unexpected
 */
 
-/*
-    TUTORIAL 3:
-    We need away to find our payload.
-    The easiest thing we can do is have an array of payloads
-*/
-var payloads = [];
- 
+var angularInjection = function(string)
+{
+    var randomNumber1 = ''; //generate two random numbers
+    var randomNumber2 = '';
+    var evaluatedPayload = '';//find the result of the product of the two numbers
+    var payload = '';//create an angular payload using the two numbers
+
+    payloads.push(evaluatedPayload); // add the evaluated payload to the array
+
+    return paylaod;
+}
 
 describe("UI test to share an item ", function(){
     var driver;
-    var fooUser = {"username":"Foo","password":"foo"};
+
+    /*
+        TUTORIAL PART 4:
+        We need to create a function that will verify if our payload executed. 
+        To check for this, we need to look in the HTML body in the DOM.
+        Create a function called 'checkPayloads' that verifies this.
+        Hint: to get the DOM, execute the script:
+        return document.body.innerHTML
+    */
+
+    var checkPayloads = async function(){
+        var dom = await '';// get the dom
+        // iterate through the payloads and assert if they are found in the dom
+    }
+
+    helpers.onSleep = checkPayloads; // make this function happen on sleep
+
+    /*
+        TUTORIAL PART 5: 
+        We need to use our function 'angularInjection' to add payloads around our tests.
+        Go through the tests, and add our payload generator, I'll do one for you :)
+    */
+
+    var fooUser = {"username":angularInjection("Foo"),"password":"foo"};
     var barUser = {"username":"Bar","password":"bar"};
 
     var note = {"title":"my note title!!", "data":"my note itself. "};
 
+    
     before(async function(){
         await helpers.startServer();
     });
@@ -50,19 +83,7 @@ describe("UI test to share an item ", function(){
     });
     
     helpers.longTest('should start the driver', async function(){
-        //Without proxy
         driver = await helpers.startDriver(); 
-        //With proxy
-        // var capabilities = {
-        //     'browserName': 'chrome',
-        //     'proxy': {
-        //         'proxyType': 'manual',
-        //         'httpProxy': 'localhost:8080',
-        //         'httpsProxy': 'localhost:8080',
-        //         'sslProxy': 'localhost:8080'
-        //       }
-        // }
-        // driver = await helpers.startDriver(capabilities); 
     });
 
     helpers.longTest('should let you make users via the api', async function(){

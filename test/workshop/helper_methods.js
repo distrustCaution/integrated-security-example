@@ -15,6 +15,7 @@ var helperMethods = function(){
     this.server =  null;
     this.testTimeout = this.standardTimeout * 20;
     this.baseUri = null
+    this.onSleep = null;
 
     this.startDriver = async function(capabilities) {
         if(!capabilities) capabilities = webdriver.Capabilities.chrome()
@@ -62,6 +63,7 @@ var helperMethods = function(){
      */
     this.sleep = function(ms) {
         if(!ms) ms = this.standardTimeout;
+        if(this.onSleep) this.onSleep();
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 

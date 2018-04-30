@@ -1,3 +1,5 @@
+//copy of helper methods
+
 var webdriver = require("selenium-webdriver");
 const {Builder, By, Key, until} = require('selenium-webdriver');
 var requestPromise = require('request-promise');
@@ -13,6 +15,7 @@ var helperMethods = function(){
     this.server =  null;
     this.testTimeout = this.standardTimeout * 20;
     this.baseUri = null
+    this.onSleep = null;
 
     this.startDriver = async function(capabilities) {
         if(!capabilities) capabilities = webdriver.Capabilities.chrome()
@@ -53,9 +56,14 @@ var helperMethods = function(){
         });
         return token;
     }
-
+    
+    /**
+     * Sleeps for a certain number of milliseconds
+     * @param {number} ms 
+     */
     this.sleep = function(ms) {
         if(!ms) ms = this.standardTimeout;
+        if(this.onSleep) this.onSleep();
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 

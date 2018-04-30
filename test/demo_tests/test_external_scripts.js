@@ -76,7 +76,8 @@ describe("UI test to share an item with external script detection", function(){
 
     after(function(){
         if(driver && driver.quit) driver = driver.quit();
-        server.server.close();        
+        server.server.close();
+        helpers        
     });
     
     it('should start the driver', async function(){
