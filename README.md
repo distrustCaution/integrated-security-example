@@ -10,7 +10,7 @@ The test code of this project includes examples on how to use this to help fin
 Requirements: 
 * NodeJS (LTS Version 8.11.1) 
 * Chrome (Version  >= 64.0.3282.0)
-* Git
+* OWASP ZAP (https://github.com/zaproxy/zaproxy/wiki/Downloads) [and it's -- dependency Java]
 
 1. First, clone the repository with:
 ```git clone https://github.com/distrustCaution/integrated-security-example.git```
@@ -113,7 +113,7 @@ You can see the 'Expect...' area, those are called assertions. This is actually 
 
 Most of the times a test suite will have a function that will automate account creation for you. You should always find something like this:
 
-## Be lazy and let ZAP/Burp do the work for you!
+## Be lazy and let the ZAP passive scan do the work for you!
 
 ## Make test work for you to find security bugs
 
