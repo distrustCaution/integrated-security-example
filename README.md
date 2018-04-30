@@ -10,7 +10,7 @@ The test code of this project includes examples on how to use this to help fin
 Requirements: 
 * NodeJS (LTS Version 8.11.1) 
 * Chrome (Version  >= 64.0.3282.0)
-* OWASP ZAP (https://github.com/zaproxy/zaproxy/wiki/Downloads) [and it's -- dependency Java]
+* OWASP ZAP (and it's -- dependency Java)
 
 1. First, clone the repository with:
 ```git clone https://github.com/distrustCaution/integrated-security-example.git```
@@ -33,8 +33,10 @@ module.js:545
 
 Error: Cannot find module '/integrated-security-example/node_modules/sqlite3/lib/binding/node-v59-linux-x64/node_sqlite3.node'
 ```
-
 In this case, I recommend installing NVM and setting your node version to exactly v8.11.1. The sqlite driver does not work properly on newer node versions.
+
+4. Install ZAP by downloading the JAR file from OWASP[https://github.com/zaproxy/zaproxy/wiki/Downloads]. *Please download the cross-platform version and move the JAR file to zaplocation in this repository. *Alternatively, if you already have ZAP installed, just find the install location of the JAR file on your machine.*
+
 
 # Workshop -- Still in progress!
 
@@ -48,11 +50,11 @@ By leverage, I other people's existing integration tests.
 The whole plan of this is to leverage existing integration tests to find real world security bugs inside a web application.
 Get ready, and I'll show you the way of integrated security testing. 
 
-As one of the greatest mathemeticians ever once said:
+As a the great hacker once said:
 
 > "Give me a lever long enough and a fulcrum on which to place it, and I shall *hack the planet*"
 
-- Archimedes
+- Hackimedes
 
 ### Benefits of integrated security testing
 
@@ -115,7 +117,13 @@ Most of the times a test suite will have a function that will automate account c
 
 ## Be lazy and let the ZAP passive scan do the work for you!
 
-## Make test work for you to find security bugs
+## Setup
+
+Make sure you have ZAP installed from here[https://github.com/zaproxy/zaproxy/wiki/Downloads] and move the JAR file into a convenient location. You can use this repositories "Zap location" folder if you wish. 
+
+## Use the passive scanner
+
+In the workshop folder, please create a file called "passive_scan.js" and copy and paste the contents of "integration_tests/test_ui.js" into that file. 
 
 ### Find XSS
 

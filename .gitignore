@@ -1,3 +1,11 @@
+#ZAP
+
+# exclude everything
+zapLocation/*
+
+# exception to the rule
+!zapLocation/README.md 
+
 # Logs
 logs
 *.log
