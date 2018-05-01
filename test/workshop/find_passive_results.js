@@ -25,7 +25,7 @@ var proxyUri = ""
     In this case, I'll do it for you, you just need to add the proxy uri
 */
 helpers.request = requestPromise.defaults(
-    {'proxy':""}
+    {'proxy':""} // put your path to your proxy here
 );
 
 describe("UI test to share an item ", function(){
