@@ -16,8 +16,14 @@
     "demoXSS": "mocha --reporter spec \"test/demo_tests/*xss.js\"",
     "demoAngularInjection": "mocha --reporter spec \"test/demo_tests/*angular_injection.js\"",
     "demoExternalScript": "mocha --reporter spec \"test/demo_tests/*external_scripts.js\"",
-    "demoSqli": "mocha --reporter spec \"test/demo_tests/*sqli.js\""
+    "demoSqli": "mocha --reporter spec \"test/demo_tests/*sqli.js\"",
     
+    "workshopAngular": "mocha --reporter spec \"test/workshop/find_angular.js\"",
+    "workshopAuthz": "mocha --reporter spec \"test/workshop/find_authz.js\"",
+    "workshopExternal": "mocha --reporter spec \"test/workshop/find_external_scripts.js\"",
+    "workshopPassive": "mocha --reporter spec \"test/workshop/find_passive_results.js\"",
+    "workshopSQLi": "mocha --reporter spec \"test/workshop/find_sqli.js\"",
+    "workshopXSS": "mocha --reporter spec \"test/workshop/find_xss.js\""
   },
   "repository": {
     "type": "git",
