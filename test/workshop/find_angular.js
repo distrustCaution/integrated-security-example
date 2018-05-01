@@ -30,6 +30,10 @@ var payloads = [];
     Note, we don't want to use 'alert' since that will stop test execution if it is unexpected
 */
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 var angularInjection = function(string)
 {
     var randomNumber1 = ''; //generate two random numbers
@@ -39,7 +43,7 @@ var angularInjection = function(string)
 
     payloads.push(evaluatedPayload); // add the evaluated payload to the array
 
-    return paylaod;
+    return payload;
 }
 
 describe("UI test to share an item ", function(){
