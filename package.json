@@ -22,7 +22,8 @@
     "workshopExternal": "mocha --reporter spec \"test/workshop/find_external_scripts.js\"",
     "workshopPassive": "mocha --reporter spec \"test/workshop/find_passive_results.js\"",
     "workshopSQLi": "mocha --reporter spec \"test/workshop/find_sqli.js\"",
-    "workshopXSS": "mocha --reporter spec \"test/workshop/find_xss.js\""
+    "workshopXSS": "mocha --reporter spec \"test/workshop/find_xss.js\"",
+    "postinstall": "./node_modules/protractor/bin/webdriver-manager update"
   },
   "repository": {
     "type": "git",
@@ -65,7 +66,6 @@
     "superagent": "^3.8.2",
     "superagent-proxy": "^1.0.3",
     "xml": "^1.0.1",
-    "xml-flow": "^1.0.2",
-    "zaproxy": "^0.2.0"
+    "xml-flow": "^1.0.2"
   }
 }

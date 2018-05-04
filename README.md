@@ -10,13 +10,16 @@ The test code of this project includes examples on how to use this to help fin
 Requirements: 
 * NodeJS (LTS Version 8.11.1) 
 * Chrome (Version  >= 64.0.3282.0)
-* OWASP ZAP (and it's -- dependency Java)
+* Chrome Driver (https://chromedriver.storage.googleapis.com/index.html?path=2.38/[https://chromedriver.storage.googleapis.com/index.html?path=2.38/])
+* OWASP ZAP (For only one part of the tutorial)
 
 1. First, clone the repository with:
 ```git clone https://github.com/distrustCaution/integrated-security-example.git```
 
 2. Then change to the cloned directory and run:
 ```npm install```
+
+*Windows users may not have the build tools for SQLite, this is due to the node-gyp depency on native build tools. To fix this, run: `npm install --global --production windows-build-tools`*
 
 3. To verify that your install worked, run:
 
