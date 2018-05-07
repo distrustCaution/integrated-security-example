@@ -10,7 +10,7 @@ The test code of this project includes examples on how to use this to help fin
 Requirements: 
 * NodeJS (LTS Version 8.11.1) 
 * Chrome (Version  >= 64.0.3282.0)
-* Chrome Driver (http://chromedriver.chromium.org/[http://chromedriver.chromium.org/])
+* Chrome Driver (http://chromedriver.chromium.org/)
 * OWASP ZAP (For only one part of the tutorial)
 
 1. First, clone the repository with:
