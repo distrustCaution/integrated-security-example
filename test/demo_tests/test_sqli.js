@@ -2,14 +2,14 @@
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../src/example_server');
+let server = require('../../src/example_server');
 var expect = require('chai').expect;
 var should = require('chai').should();
 const http = require('http');
 const ProxyAgent = require('proxy-agent');
 var request = require('request');
 var rp = require('request-promise');
-const baseTester = require('../../base_tester');
+const baseTester = require('integrated-security').base;
 const sequelize = require('sequelize');
 
 
@@ -27,66 +27,66 @@ var r = rp.defaults({'proxy':proxyUri});
 
 //normally sqli would be in it's own module, but I want to show it all in one place
     sqliEscapes = [
-        {
-            name: "no escape sequence, just a value",
-            start: "1 ",
-            end: ""
-        },
-        {
-            name: "no escape sequence, just a value",
-            start: "1 ",
-            end: ""
-        },
-        {
-            name: "single quote left open",
-            start: "1' ",
-            end: ""
-        },
+        // {
+        //     name: "no escape sequence, just a value",
+        //     start: "1 ",
+        //     end: ""
+        // },
+        // {
+        //     name: "no escape sequence, just a value",
+        //     start: "1 ",
+        //     end: ""
+        // },
+        // {
+        //     name: "single quote left open",
+        //     start: "1' ",
+        //     end: ""
+        // },
         {
             name: "single quote open with comment",
             start: "1'",
             end: "--"
-        },
-        {
-            name: "single quote with 'and statement' ",
-            start: "1' and 1=1 ",
-            end: ""
-        },
-        {
-            name: "single quote with 'or statement' ",
-            start: "1' or 1=1 ",
-            end: ""
-        },
-        {
-            name: "single quote closed",
-            start: "1' ",
-            end: "'"
-        },
-        {
-            name: "single quote closed with comment",
-            start: "1'",
-            end: "' --"
-        },
-        {
-            name: "comment then line break",
-            start: "-- \n",
-            end: ""
-        },
-        {
-            name: "single quote, comment, then line break",
-            start: "1'-- \n",
-            end: ""
-        },
-        {
-            name: "back-tick, comment, then line break",
-            start: "`-- \n",
-            end: ""
-        },
-        {
-            name: "double quote left open", //not going to work, but interesting to iterate
-            start: "\" ",
-            end: ""
-        }
+        }//,
+        // {
+        //     name: "single quote with 'and statement' ",
+        //     start: "1' and 1=1 ",
+        //     end: ""
+        // },
+        // {
+        //     name: "single quote with 'or statement' ",
+        //     start: "1' or 1=1 ",
+        //     end: ""
+        // },
+        // {
+        //     name: "single quote closed",
+        //     start: "1' ",
+        //     end: "'"
+        // },
+        // {
+        //     name: "single quote closed with comment",
+        //     start: "1'",
+        //     end: "' --"
+        // },
+        // {
+        //     name: "comment then line break",
+        //     start: "-- \n",
+        //     end: ""
+        // },
+        // {
+        //     name: "single quote, comment, then line break",
+        //     start: "1'-- \n",
+        //     end: ""
+        // },
+        // {
+        //     name: "back-tick, comment, then line break",
+        //     start: "`-- \n",
+        //     end: ""
+        // },
+        // {
+        //     name: "double quote left open", //not going to work, but interesting to iterate
+        //     start: "\" ",
+        //     end: ""
+        // }
     ]
     var checkForSqli = async function(holdingArray, value){
         // some test environments have access to the database!!

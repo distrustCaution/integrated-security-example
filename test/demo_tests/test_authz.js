@@ -1,7 +1,7 @@
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../src/example_server');
-let sql = require('../example_server/example_models');
+let server = require('../../src/example_server');
+let sql = require('../../src/example_models');
 
 var expect = require('chai').expect;
 const http = require('http');

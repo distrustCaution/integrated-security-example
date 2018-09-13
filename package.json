@@ -62,10 +62,7 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "selenium-webdriver": "^4.0.0-alpha.1",
-    "strong-soap": "^1.5.0",
     "superagent": "^3.8.2",
-    "superagent-proxy": "^1.0.3",
-    "xml": "^1.0.1",
-    "xml-flow": "^1.0.2"
+    "superagent-proxy": "^1.0.3"
   }
 }
