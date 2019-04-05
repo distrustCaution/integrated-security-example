@@ -1,7 +1,7 @@
 var webdriver = require("selenium-webdriver");
 const {Builder, By, Key, until} = require('selenium-webdriver');
 var expect = require('chai').expect;
-let server = require('../src/example_server');
+let server = require('../../src/example_server');
 
 var requestPromise = require('request-promise');
 

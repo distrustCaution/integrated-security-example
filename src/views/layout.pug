@@ -10,7 +10,7 @@ html
     if user != null
         p Welcome back to the note taking app #{user.username}
         div(ng-controller='titleController')
-            a(href='/home') All Notes
+            a#allNotes(href='/home') All Notes
             span  
             button#newNote(ng-click="newNote()") New Note
         block content 

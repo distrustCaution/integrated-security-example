@@ -4,7 +4,7 @@ block content
     each note in notes
         - var noteTitle = '<em>' + note.title + '</em>'
         li 
-            a(href='/note/'+note.id)!= noteTitle
+            a(class='notelink' href='/note/'+note.id)!= noteTitle
 
         
 

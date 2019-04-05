@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="notes-ui;make-and-save-and-change-a-note" tests="18" failures="1" skipped="16">
+        <properties>
+            <property name="URI" value="C:/docusign/integrated-security-example/features/note_taker.feature">
+            </property>
+        </properties>
+        <testcase name="Given the account named foo&lt;script&gt;alert(1)&lt;/script&gt;{{2+2}} with password foo" classname="notes-ui;make-and-save-and-change-a-note" time="0.161011983">
+        </testcase>
+        <testcase name="When I login as foo&lt;script&gt;alert(1)&lt;/script&gt;{{2+2}} with password foo" classname="notes-ui;make-and-save-and-change-a-note" time="15.001213002">
+            <failure message="function timed out after 15000 milliseconds">function timed out after 15000 milliseconds</failure>
+        </testcase>
+        <testcase name="Then I should see the &quot;allNotesTitle&quot; element" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="When I click on &quot;newNote&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="Then I should see the &quot;notetitle&quot; element" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I should see the &quot;notebody&quot; element" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="When I clear and fill in &quot;notetitle&quot; with &quot;hello this is my note title&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I clear and fill in &quot;notebody&quot; with &quot;hello this is my note body!&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I click on &quot;saveButton&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="Then I should see the &quot;notetitle&quot; element containing &quot;hello this is my note title&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I should see the &quot;notebody&quot; element containing &quot;hello this is my note body!&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I click on &quot;allNotes&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="Then I should see the &quot;allNotesTitle&quot; element" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I should see 1 note on the notes page" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="When I click on the link with the text &quot;hello this is my note title&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="Then I should see the &quot;notetitle&quot; element containing &quot;hello this is my note title&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I should see the &quot;notebody&quot; element containing &quot;hello this is my note body!&quot;" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="Then Sleep 2" classname="notes-ui;make-and-save-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+    </testsuite>
+    <testsuite name="notes-ui;make-and-change-a-note" tests="13" failures="1" skipped="10">
+        <properties>
+            <property name="URI" value="C:/docusign/integrated-security-example/features/note_taker.feature">
+            </property>
+        </properties>
+        <testcase name="Given the account named alice with password alice" classname="notes-ui;make-and-change-a-note" time="0.104946934">
+        </testcase>
+        <testcase name="Given the account named bob with password bob" classname="notes-ui;make-and-change-a-note" time="0.10283899">
+        </testcase>
+        <testcase name="When I login as alice with password alice" classname="notes-ui;make-and-change-a-note" time="15.00057265">
+            <failure message="function timed out after 15000 milliseconds">function timed out after 15000 milliseconds</failure>
+        </testcase>
+        <testcase name="And I click on &quot;newNote&quot;" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="Then I should see the &quot;notebody&quot; element" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="When I clear and fill in &quot;notetitle&quot; with &quot;hello this is my note title&quot;" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I clear and fill in &quot;notebody&quot; with &quot;hello this is my note body!&quot;" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I click on &quot;saveButton&quot;" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="Then I should see the &quot;notebody&quot; element containing &quot;hello this is my note body!&quot;" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="When I clear and fill in &quot;share&quot; with &quot;bob&quot;" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And I click on &quot;shareButton&quot;" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="Then I should see the &quot;shareResult&quot; element containing &quot;bob&quot;" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+        <testcase name="And Sleep 3" classname="notes-ui;make-and-change-a-note">
+            <skipped message="">
+            </skipped>
+        </testcase>
+    </testsuite>
+</testsuites>

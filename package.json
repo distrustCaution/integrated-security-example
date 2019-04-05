@@ -23,7 +23,8 @@
     "workshopPassive": "mocha --reporter spec \"test/workshop/find_passive_results.js\"",
     "workshopSQLi": "mocha --reporter spec \"test/workshop/find_sqli.js\"",
     "workshopXSS": "mocha --reporter spec \"test/workshop/find_xss.js\"",
-    "postinstall": "./node_modules/protractor/bin/webdriver-manager update"
+    "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
+    "cucumber" : "node ./node_modules/selenium-cucumber-js/index.js -s ./step-definitions"
   },
   "repository": {
     "type": "git",
@@ -54,6 +55,7 @@
     "bootstrap": "^4.0.0",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
+    "cucumber": "^5.1.0",
     "integrated-security": "0.0.2",
     "jquery": "^3.3.1",
     "mocha": "^5.0.0",
@@ -61,6 +63,7 @@
     "proxy-agent": "^2.2.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
+    "selenium-cucumber-js": "^1.6.2",
     "selenium-webdriver": "^4.0.0-alpha.1",
     "superagent": "^3.8.2",
     "superagent-proxy": "^1.0.3"

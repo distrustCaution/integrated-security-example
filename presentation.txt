@@ -1,0 +1,10 @@
+Web Automation:
+integrationTest
+demoXSS
+demoAngularInjection
+demoExternalScript
+
+API Automation:
+demoSqli
+demoAuthz
+
