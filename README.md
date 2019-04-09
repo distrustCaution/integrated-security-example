@@ -17,7 +17,9 @@ Requirements:
 ```git clone https://github.com/distrustCaution/integrated-security-example.git```
 
 2. Then change to the cloned directory and run:
-```npm install```
+```npm install --build-from-source```
+
+*You may see file permission errors when building (I did on linux), so this command (run at your own risk) may help you: `npm install --build-from-source --unsafe-perm=true --allow-root`*
 
 *Windows users may not have the build tools for SQLite, this is due to the node-gyp depency on native build tools. To fix this, run: `npm install --global --production windows-build-tools`*
 
@@ -58,6 +60,8 @@ As a the great hacker once said:
 > "Give me a lever long enough and a fulcrum on which to place it, and I shall *hack the planet*"
 
 - Hackimedes
+
+Wait, that's me -- I'm so great! And you're so great too for learning the way of hackido. Alright, let's get hacking
 
 ### Benefits of integrated security testing
 

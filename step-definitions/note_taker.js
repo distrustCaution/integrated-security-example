@@ -50,23 +50,52 @@ module.exports = function () {
     });
     
     // add before scenario hook
+    var intermediateActions = [];
+    var executeIntermediateActions = async function(){
+        if(intermediateActions.length == 0) return null;
+        for(var i = 0; i < intermediateActions.length; i++){
+            await intermediateActions[i]();
+        }
+        return null;
+    }
     this.BeforeScenario(function(scenario, done) {
+        intermediateActions = [];
         done();
     });
+
+    this.AfterStep(async function(step){
+        await executeIntermediateActions();
+    })
     
     // add after scenario hook
     this.AfterScenario(function(scenario, done) {
         done();
     });
 
-    this.Given(/the account named (.*) with password (.*)/, function(username, password){
+    // for demonstration and security
+
+    this.Given(/Wait ([^"]*) seconds between steps/, async function(int1){
+        var ms = parseFloat(int1)*1000
+        intermediateActions.push(async function(){console.log("adsf");await driver.sleep(ms)})
+        return null;
+    });
+
+    this.Given(/Check for external scripts/, async function(){
+        var ms = parseFloat(int1)*1000
+        intermediateActions.push(async function(){console.log("adsf");await driver.sleep(ms)})
+        return await sleep(10);
+    });
+
+
+
+    this.Given(/the account named "([^"]*)" with password "([^"]*)"/, function(username, password){
         return shared.configuration.createAccount({
             username: username,
             password: password
         })
     });
 
-    this.When(/I login as (.*) with password (.*)/, function(username, password){
+    this.When(/I login as "([^"]*)" with password "([^"]*)"/, function(username, password){
 
         return helpers.loadPage(shared.configuration.baseUri+"/login").then(async function(){
             await fill_element('username', username, 'name')
@@ -86,7 +115,7 @@ module.exports = function () {
             driver.findElement(by.id(elementId))
             .then(async function(element){
                 var actual = await element.getText()
-                expect(actual).to.equal(text);
+                expect(actual).to.contain(text);
             })
         })
     });
@@ -103,6 +132,17 @@ module.exports = function () {
             .then(function(elements){
                expect(elements.length).to.equal(num)
             });
+    });
+
+    this.Then(/^I should see the name "([^"]*)" up top$/, function(name){
+        return driver.wait(until.elementLocated(by.id("welcomeText")),1000)
+        .then(function(){
+            driver.findElement(by.id("welcomeText"))
+            .then(async function(element){
+                var actual = await element.getText()
+                expect(actual).to.contain(name);
+            })
+        })
     });
 
     this.When(/^I click on the link with the text "([^"]*)"$/, function(text){

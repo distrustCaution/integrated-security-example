@@ -14,7 +14,6 @@ const sequelize = require('sequelize');
 
 
 chai.use(chaiHttp);
-// require('superagent-proxy')(chai.request.Test);
 
 const port = 8000;
 const baseUri = "http://localhost:"+port

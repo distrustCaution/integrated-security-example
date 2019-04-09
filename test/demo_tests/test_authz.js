@@ -10,7 +10,6 @@ var rp = require('request-promise');
 
 
 chai.use(chaiHttp);
-// require('superagent-proxy')(chai.request.Test);
 
 const port = 8000;
 const baseUri = "http://localhost:"+port
@@ -101,7 +100,7 @@ describe("API with authorization bypass attempts", function(){
         it('the victim should be able to make a note', async function(){ //this is essentially a preparation step
             note.id = await r({
                 method: 'POST',
-                uri: baseUri+"/api/note",
+            uri: baseUri+"/api/note",
                 headers : {
                     Token: user1.token
                 },

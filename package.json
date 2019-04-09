@@ -17,14 +17,7 @@
     "demoAngularInjection": "mocha --reporter spec \"test/demo_tests/*angular_injection.js\"",
     "demoExternalScript": "mocha --reporter spec \"test/demo_tests/*external_scripts.js\"",
     "demoSqli": "mocha --reporter spec \"test/demo_tests/*sqli.js\"",
-    "workshopAngular": "mocha --reporter spec \"test/workshop/find_angular.js\"",
-    "workshopAuthz": "mocha --reporter spec \"test/workshop/find_authz.js\"",
-    "workshopExternal": "mocha --reporter spec \"test/workshop/find_external_scripts.js\"",
-    "workshopPassive": "mocha --reporter spec \"test/workshop/find_passive_results.js\"",
-    "workshopSQLi": "mocha --reporter spec \"test/workshop/find_sqli.js\"",
-    "workshopXSS": "mocha --reporter spec \"test/workshop/find_xss.js\"",
-    "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
-    "cucumber" : "node ./node_modules/selenium-cucumber-js/index.js -s ./step-definitions"
+    "cucumber": "node ./node_modules/selenium-cucumber-js/index.js -s ./step-definitions"
   },
   "repository": {
     "type": "git",
@@ -37,19 +30,19 @@
   },
   "homepage": "https://github.com/distrustCaution/Integrated-Security-Example#readme",
   "dependencies": {
-    "express": "^4.16.4",
-    "angular-cookies": "^1.7.8",
-    "body-parser": "^1.18.3",
     "angular": "^1.7.8",
-    "uuid": "^3.3.2",
-    "jsonwebtoken": "^8.5.1",
+    "angular-cookies": "^1.7.8",
     "bcrypt": "^3.0.5",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
+    "crypto": "^1.0.1",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "jsonwebtoken": "^8.5.1",
     "pug": "^2.0.3",
     "sequelize": "^5.2.12",
     "sqlite3": "^4.0.6",
-    "cookie-parser": "^1.4.4",
-    "crypto": "^1.0.1",
-    "http": "0.0.0"
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -58,13 +51,10 @@
     "integrated-security": "0.0.2",
     "jquery": "^3.3.1",
     "mocha": "^6.0.2",
-    "popper.js": "^1.15.0",
     "proxy-agent": "^3.1.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "selenium-cucumber-js": "^1.6.2",
-    "selenium-webdriver": "^4.0.0-alpha.1",
-    "superagent": "^5.0.2",
-    "superagent-proxy": "^2.0.0"
+    "selenium-webdriver": "^4.0.0-alpha.1"
   }
 }

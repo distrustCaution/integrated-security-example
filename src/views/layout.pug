@@ -8,7 +8,7 @@ html
     body(ng-app='app')
 
     if user != null
-        p Welcome back to the note taking app #{user.username}
+        p#welcomeText Welcome back to the note taking app #{user.username}
         div(ng-controller='titleController')
             a#allNotes(href='/home') All Notes
             span  
