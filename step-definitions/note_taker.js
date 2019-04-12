@@ -8,13 +8,14 @@
 let example = require('../src/example_server');
 
 module.exports = function () {
-    var sleep = function(seconds){
-        return new Promise(resolve => setTimeout(resolve, seconds));
+    var sleep = function(ms){
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    var fill_element = function(elementName, str, locator){
+    var fill_element = function(elementName, str, locator, waitTime){
+        if(!waitTime) waitTime = 1000
         if(!locator) locator = 'id'
-        return driver.wait(until.elementLocated(by[locator](elementName)),1000)
+        return driver.wait(until.elementLocated(by[locator](elementName)),waitTime)
         .then(function(){
             return driver.findElement(by[locator](elementName));
         })
@@ -37,8 +38,9 @@ module.exports = function () {
     // add a before feature hook
     this.BeforeFeature(function(feature, done) {
         // await example.start(shared.configuration.port);
-        shared.configuration.startServer().then(function(){
+        shared.configuration.startServer().then(async function(){
             console.log('Server started on port '+shared.configuration.port);
+            await sleep(2000);
             done();
         });
     });
@@ -51,42 +53,140 @@ module.exports = function () {
     
     // add before scenario hook
     var intermediateActions = [];
-    var executeIntermediateActions = async function(){
+    var executeArrayOfFunctions = async function(actions){
         if(intermediateActions.length == 0) return null;
-        for(var i = 0; i < intermediateActions.length; i++){
-            await intermediateActions[i]();
+        for(var i = 0; i < actions.length; i++){
+            await actions[i]();
         }
         return null;
     }
+    var users = {};
+    var notes = {};
     this.BeforeScenario(function(scenario, done) {
+        users = {};
+        notes = {};
         intermediateActions = [];
+        afterScenarioAssertions = [];
         done();
+    });
+    
+    this.Given(/^The user named "([^"]*)" with username "([^"]*)" with password "([^"]*)"$/, function(name, username, password){
+        var user = {
+            username: username,
+            password: password
+        }
+        users[name] = user;
+        return shared.configuration.createAccount(user)
     });
 
+    this.Given(/^The note named "([^"]*)" with the title "([^"]*)" and the content "([^"]*)"$/, function(name, title, content){
+        var note = {
+            title: title,
+            content: content
+        }
+        notes[name] = note;
+    })
+
     this.AfterStep(async function(step){
-        await executeIntermediateActions();
+        await executeArrayOfFunctions(intermediateActions);
     })
     
+    var afterScenarioAssertions = [];
     // add after scenario hook
-    this.AfterScenario(function(scenario, done) {
-        done();
-    });
+    // this.AfterScenario(async function(scenario) {
+    //     await executeArrayOfFunctions(afterScenarioAssertions);
+    //     // done();
+    // });
 
     // for demonstration and security
 
-    this.Given(/Wait ([^"]*) seconds between steps/, async function(int1){
+    this.Given(/Wait ([^"]*) seconds? between steps/, async function(int1){
         var ms = parseFloat(int1)*1000
-        intermediateActions.push(async function(){console.log("adsf");await driver.sleep(ms)})
+        intermediateActions.push(async function(){await driver.sleep(ms)})
         return null;
     });
 
-    this.Given(/Check for external scripts/, async function(){
-        var ms = parseFloat(int1)*1000
-        intermediateActions.push(async function(){console.log("adsf");await driver.sleep(ms)})
-        return await sleep(10);
+    // SECURITY CHECKS
+
+    this.Given(/^Check for external scripts$/, function(done){
+        intermediateActions.push(async function(){
+            /* 
+                javascript incantation to find scripts not loaded from the same origin 
+                using window.performance.getEntries() 
+            */
+            var script = "return window.performance.getEntries().filter((el) => (el.initiatorType == 'script' && !RegExp('^'+window.location.origin).test(el.name)))"
+            var result;
+            try {
+                result = await driver.executeScript(script);
+            } catch(e){
+                // console.log(e);
+                result = null;
+            }
+            if(result && result.length > 0){
+                result.forEach((err)=> {
+
+                    afterScenarioAssertions.push(async function(){
+                        expect(err.name, "A script was loaded externally from "+err.name).to.be.null;
+                    });
+                });
+            }
+
+
+        });
+
+        done();
     });
 
+    this.Given(/^Check for the evaluated angular expression "([^"]*)"$/, function(number,done){
+        intermediateActions.push(async function(){
+            /* 
+                Search the DOM for the angular payload
+            */
+            var html;
+            try {
+                html = await driver.executeScript("return document.body.innerHTML");
+            } catch(e){
+                html = null;
+            }
+            if(html && html.length > 0){
+                afterScenarioAssertions.push(async function(){
+                    expect(html.indexOf(number.toString()), "The evaluated angular expression "+number+" appeared in the html").to.equal(-1);
+                });
+            }
+        });
+        done();
+    });
 
+    
+    this.Given(/^Check for the evaluated xss expression "([^"]*)"$/, async function(number, done){
+        intermediateActions.push(async function(){
+            /* 
+                Search the logs for the XSS payload
+            */
+            var logs;
+            try {
+                logs = await driver.manage().logs().get(selenium.logging.Type.BROWSER);
+            } catch(e){
+                logs = null;
+            }
+            if(logs && logs.length > 0){
+                logs.forEach((item)=> {
+                    if (item.message.indexOf(number.toString()) > -1){
+                        afterScenarioAssertions.push(async function(){
+                            expect(item.message, "The XSS payload "+number+" appeared in the logs").to.be.null;
+                        });
+                    }
+                });
+            }
+        });
+        done();
+    });
+
+    this.Then(/I check security/, async function(){
+        await executeArrayOfFunctions(afterScenarioAssertions); 
+    });
+
+    // SECURITY CHECKS
 
     this.Given(/the account named "([^"]*)" with password "([^"]*)"/, function(username, password){
         return shared.configuration.createAccount({
@@ -95,14 +195,25 @@ module.exports = function () {
         })
     });
 
-    this.When(/I login as "([^"]*)" with password "([^"]*)"/, function(username, password){
+    this.When(/^I am on the ([^"]*) page$/, async function(page){
+        await helpers.loadPage(shared.configuration.baseUri+"/"+page);
+        await sleep(1000);
+        return await driver.executeScript("window.stop();")
+    });
 
-        return helpers.loadPage(shared.configuration.baseUri+"/login").then(async function(){
-            await fill_element('username', username, 'name')
-            await fill_element('password', password, 'name')
-            var element = await driver.findElement(by.id('login'))
-            return await element.click();
-        });
+    this.When(/^I login as "([^"]*)" with password "([^"]*)"$/, async function(username, password){
+        await fill_element('username', username, 'name',10000)
+        await fill_element('password', password, 'name',10000)
+        var element = await driver.findElement(by.id('login'))
+        return await element.click();
+    });
+
+    this.When(/^I login as "([^"]*)"$/, async function(name){
+        var user = users[name]
+        await fill_element('username', user.username, 'name',10000)
+        await fill_element('password', user.password, 'name',10000)
+        var element = await driver.findElement(by.id('login'))
+        return await element.click();
     });
 
     this.Then(/I should see the "([^"]*)" element$/, function(elementId){
@@ -119,6 +230,30 @@ module.exports = function () {
             })
         })
     });
+
+    this.Then(/^I should see the "([^"]*)" element containing note named "([^"]*)" "([^"]*)"$/, function (elementId, name, part) {
+        var text = notes[name][part];
+        return driver.wait(until.elementLocated(by.id(elementId)),1000)
+        .then(function(){
+            driver.findElement(by.id(elementId))
+            .then(async function(element){
+                var actual = await element.getText()
+                expect(actual).to.contain(text);
+            })
+        })
+    });
+
+    this.Then(/^I should see the "([^"]*)" element containing "([^"]*)" of user "([^"]*)"$/, function (elementId, part, name) {
+        var text = users[name][part];
+        return driver.wait(until.elementLocated(by.id(elementId)),1000)
+        .then(function(){
+            driver.findElement(by.id(elementId))
+            .then(async function(element){
+                var actual = await element.getText()
+                expect(actual).to.contain(text);
+            })
+        })
+      });
 
     this.Then(/Sleep ([^"]*)/, function(int1){
         // helps for presentations/debugging
@@ -145,7 +280,27 @@ module.exports = function () {
         })
     });
 
+    this.Then(/^I should see the name of "([^"]*)" up top$/, function(name){
+        var user = users[name];
+        return driver.wait(until.elementLocated(by.id("welcomeText")),1000)
+        .then(function(){
+            driver.findElement(by.id("welcomeText"))
+            .then(async function(element){
+                var actual = await element.getText()
+                expect(actual).to.contain(user.username);
+            })
+        })
+    });
+
     this.When(/^I click on the link with the text "([^"]*)"$/, function(text){
+        return helpers.getFirstElementContainingText('a',text)
+        .then(function(element){
+            return element.click();
+        });
+    });
+
+    this.When(/^I click on the link with the note named "([^"]*)" title$/, function (name) {
+        var text = notes[name]['title'];
         return helpers.getFirstElementContainingText('a',text)
         .then(function(element){
             return element.click();
@@ -168,4 +323,10 @@ module.exports = function () {
         await clear_element(id);
         return await fill_element(id, string);
     });
+    this.When(/^I fill in "([^"]*)" with note named "([^"]*)" "([^"]*)"$/, async function(id, name, part){
+        var string = notes[name][part];
+        await clear_element(id);
+        return await fill_element(id, string);
+    });
+    
 };

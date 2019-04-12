@@ -17,7 +17,8 @@
     "demoAngularInjection": "mocha --reporter spec \"test/demo_tests/*angular_injection.js\"",
     "demoExternalScript": "mocha --reporter spec \"test/demo_tests/*external_scripts.js\"",
     "demoSqli": "mocha --reporter spec \"test/demo_tests/*sqli.js\"",
-    "cucumber": "node ./node_modules/selenium-cucumber-js/index.js -s ./step-definitions"
+    "cucumber": "node ./node_modules/selenium-cucumber-js/index.js -s ./step-definitions -f ./features/note_taker.feature",
+    "attack": "node ./node_modules/selenium-cucumber-js/index.js -s ./step-definitions -f ./features/note_taker_with_attack.feature"
   },
   "repository": {
     "type": "git",
