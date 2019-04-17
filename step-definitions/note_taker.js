@@ -328,5 +328,11 @@ module.exports = function () {
         await clear_element(id);
         return await fill_element(id, string);
     });
+
+    this.When(/^I clear and fill in "([^"]*)" with the "([^"]*)" of user "([^"]*)"$/, async function (id, part, name) {
+        var string = users[name][part];
+        await clear_element(id);
+        return await fill_element(id, string);
+      });
     
 };

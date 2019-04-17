@@ -1,55 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-    <testsuite name="notes-ui;make-and-share-a-note" tests="23" failures="0" skipped="0">
+    <testsuite name="notes-ui;make-and-share-a-note" tests="24" failures="1" skipped="0">
         <properties>
-            <property name="URI" value="C:\docusign\integrated-security-example\features\note_taker.feature">
+            <property name="URI" value="/home/hackimedes/integrated-security-example/features/note_taker.feature">
             </property>
         </properties>
-        <testcase name="Given The user named &quot;alice&quot; with username &quot;alice&quot; with password &quot;alice&quot;" classname="notes-ui;make-and-share-a-note" time="0.176545405">
+        <testcase name="Given Check for external scripts" classname="notes-ui;make-and-share-a-note" time="0.001934802">
         </testcase>
-        <testcase name="Given The user named &quot;bob&quot; with username &quot;bob&quot; with password &quot;bob&quot;" classname="notes-ui;make-and-share-a-note" time="0.122940585">
+        <testcase name="Given The user named &quot;alice&quot; with username &quot;alice&quot; with password &quot;alice&quot;" classname="notes-ui;make-and-share-a-note" time="0.711318928">
         </testcase>
-        <testcase name="Given The note named &quot;note&quot; with the title &quot;my note&quot; and the content &quot;hello I&apos;m a note&quot;" classname="notes-ui;make-and-share-a-note" time="0.000204518">
+        <testcase name="Given The user named &quot;bob&quot; with username &quot;bob&quot; with password &quot;bob&quot;" classname="notes-ui;make-and-share-a-note" time="0.387283074">
         </testcase>
-        <testcase name="When I am on the login page" classname="notes-ui;make-and-share-a-note" time="5.334609101">
+        <testcase name="Given The note named &quot;note&quot; with the title &quot;my note&quot; and the content &quot;hello I&apos;m a note&quot;" classname="notes-ui;make-and-share-a-note" time="0.00053704">
         </testcase>
-        <testcase name="And I login as &quot;alice&quot;" classname="notes-ui;make-and-share-a-note" time="0.548910608">
+        <testcase name="When I am on the login page" classname="notes-ui;make-and-share-a-note" time="4.024765972">
         </testcase>
-        <testcase name="And I click on &quot;newNote&quot;" classname="notes-ui;make-and-share-a-note" time="0.082469334">
+        <testcase name="And I login as &quot;alice&quot;" classname="notes-ui;make-and-share-a-note" time="2.832716792">
         </testcase>
-        <testcase name="And I should see the name of &quot;alice&quot; up top" classname="notes-ui;make-and-share-a-note" time="0.193255214">
+        <testcase name="And I click on &quot;newNote&quot;" classname="notes-ui;make-and-share-a-note" time="0.587860851">
         </testcase>
-        <testcase name="When I fill in &quot;notetitle&quot; with note named &quot;note&quot; &quot;title&quot;" classname="notes-ui;make-and-share-a-note" time="0.211853993">
+        <testcase name="And I should see the name of &quot;alice&quot; up top" classname="notes-ui;make-and-share-a-note" time="1.17553723">
         </testcase>
-        <testcase name="And I fill in &quot;notebody&quot; with note named &quot;note&quot; &quot;content&quot;" classname="notes-ui;make-and-share-a-note" time="0.199250407">
+        <testcase name="When I fill in &quot;notetitle&quot; with note named &quot;note&quot; &quot;title&quot;" classname="notes-ui;make-and-share-a-note" time="0.872092526">
         </testcase>
-        <testcase name="And I click on &quot;saveButton&quot;" classname="notes-ui;make-and-share-a-note" time="0.077298912">
+        <testcase name="And I fill in &quot;notebody&quot; with note named &quot;note&quot; &quot;content&quot;" classname="notes-ui;make-and-share-a-note" time="1.078119525">
         </testcase>
-        <testcase name="Then I should see the &quot;notebody&quot; element containing note named &quot;note&quot; &quot;content&quot;" classname="notes-ui;make-and-share-a-note" time="0.155472667">
+        <testcase name="And I click on &quot;saveButton&quot;" classname="notes-ui;make-and-share-a-note" time="0.467593397">
         </testcase>
-        <testcase name="When I clear and fill in &quot;share&quot; with &quot;bob&quot;" classname="notes-ui;make-and-share-a-note" time="0.169142919">
+        <testcase name="Then I should see the &quot;notebody&quot; element containing note named &quot;note&quot; &quot;content&quot;" classname="notes-ui;make-and-share-a-note" time="0.230508191">
         </testcase>
-        <testcase name="And I click on &quot;shareButton&quot;" classname="notes-ui;make-and-share-a-note" time="0.078795418">
+        <testcase name="When I clear and fill in &quot;share&quot; with the &quot;username&quot; of user &quot;bob&quot;" classname="notes-ui;make-and-share-a-note" time="0.830315719">
         </testcase>
-        <testcase name="Then I should see the &quot;shareresult&quot; element containing &quot;username&quot; of user &quot;bob&quot;" classname="notes-ui;make-and-share-a-note" time="0.067442565">
+        <testcase name="And I click on &quot;shareButton&quot;" classname="notes-ui;make-and-share-a-note" time="0.310264453">
         </testcase>
-        <testcase name="When I am on the login page" classname="notes-ui;make-and-share-a-note" time="1.133407312">
+        <testcase name="Then I should see the &quot;shareresult&quot; element containing &quot;username&quot; of user &quot;bob&quot;" classname="notes-ui;make-and-share-a-note" time="0.422640062">
         </testcase>
-        <testcase name="And I login as &quot;bob&quot;" classname="notes-ui;make-and-share-a-note" time="0.385150033">
+        <testcase name="When I am on the login page" classname="notes-ui;make-and-share-a-note" time="1.492611496">
         </testcase>
-        <testcase name="Then I should see 1 note on the notes page" classname="notes-ui;make-and-share-a-note" time="0.021844264">
+        <testcase name="And I login as &quot;bob&quot;" classname="notes-ui;make-and-share-a-note" time="2.194910512">
         </testcase>
-        <testcase name="And I should see the name of &quot;bob&quot; up top" classname="notes-ui;make-and-share-a-note" time="0.043042534">
+        <testcase name="Then I should see 1 note on the notes page" classname="notes-ui;make-and-share-a-note" time="0.09320561">
         </testcase>
-        <testcase name="When I click on the link with the note named &quot;note&quot; title" classname="notes-ui;make-and-share-a-note" time="0.127207955">
+        <testcase name="And I should see the name of &quot;bob&quot; up top" classname="notes-ui;make-and-share-a-note" time="0.277042054">
         </testcase>
-        <testcase name="And I should see the name of &quot;bob&quot; up top" classname="notes-ui;make-and-share-a-note" time="0.041650402">
+        <testcase name="When I click on the link with the note named &quot;note&quot; title" classname="notes-ui;make-and-share-a-note" time="0.859349441">
         </testcase>
-        <testcase name="Then I should see the &quot;notetitle&quot; element containing note named &quot;note&quot; &quot;title&quot;" classname="notes-ui;make-and-share-a-note" time="0.034597359">
+        <testcase name="And I should see the name of &quot;bob&quot; up top" classname="notes-ui;make-and-share-a-note" time="0.12896724">
         </testcase>
-        <testcase name="And I should see the &quot;notebody&quot; element containing note named &quot;note&quot; &quot;content&quot;" classname="notes-ui;make-and-share-a-note" time="0.040869709">
+        <testcase name="Then I should see the &quot;notetitle&quot; element containing note named &quot;note&quot; &quot;title&quot;" classname="notes-ui;make-and-share-a-note" time="0.210048583">
         </testcase>
-        <testcase name="Then I check security assertions" classname="notes-ui;make-and-share-a-note" time="0.000130115">
+        <testcase name="And I should see the &quot;notebody&quot; element containing note named &quot;note&quot; &quot;content&quot;" classname="notes-ui;make-and-share-a-note" time="0.238928404">
+        </testcase>
+        <testcase name="Then I check security assertions" classname="notes-ui;make-and-share-a-note" time="0.010946227">
+            <failure message="AssertionError: A script was loaded externally from https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js: expected &apos;https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js&apos; to be null">AssertionError: A script was loaded externally from https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js: expected &apos;https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js&apos; to be null
+    at Array.&lt;anonymous&gt; (/home/hackimedes/integrated-security-example/step-definitions/note_taker.js:129:96)
+    at executeArrayOfFunctions (/home/hackimedes/integrated-security-example/step-definitions/note_taker.js:59:29)
+    at createWorld.&lt;anonymous&gt; (/home/hackimedes/integrated-security-example/step-definitions/note_taker.js:186:15)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+    at process._tickCallback (internal/process/next_tick.js:180:9)</failure>
         </testcase>
     </testsuite>
 </testsuites>
