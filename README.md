@@ -1,5 +1,5 @@
 # Integrated-Security-Example
-Example code to show how to do integrated security testing
+Example code to show how to do integrated security testing. _Please note, this repository is vulnerable to several attacks on purpose for learning purposes_
 
 # Learn how to use as part of security testing
 
@@ -118,44 +118,3 @@ Likewise, in the 'after' function, you have the equivalent 'tear down' step. Thi
 
 You can see the 'Expect...' area, those are called assertions. This is actually how we verify that what we are testing for. It's not enough to type in '2+2', you need to make sure that it actually equals '4'
 
-### Making an account
-
-Most of the times a test suite will have a function that will automate account creation for you. You should always find something like this:
-
-## Be lazy and let the ZAP passive scan do the work for you!
-
-## Setup
-
-Make sure you have ZAP installed from here[https://github.com/zaproxy/zaproxy/wiki/Downloads] and move the JAR file into a convenient location. You can use this repositories "Zap location" folder if you wish. 
-
-## Use the passive scanner
-
-In the workshop folder, please create a file called "passive_scan.js" and copy and paste the contents of "integration_tests/test_ui.js" into that file. 
-
-### Find XSS
-
-### Find Angular Injection
-
-### Authorization
-
-### Authentication
-
-### Find XXE
-
-#### With filesystem access
-
-Use ls -lu
-
-#### Without filesystem access
-
-### Find SQLi
-
-#### With db access
-
-#### Without db access
-
-### Find CSV Injection
-
-### Find Open Redirects
-
-### Find File System Writes (Must have fileystem access)
